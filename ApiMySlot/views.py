@@ -31,7 +31,7 @@ def availabilitieApi(request, id=0):
         return JsonResponse("Availabilitie was not created", safe=False)
     elif request.method == 'PUT':
         availabilitie_data=JSONParser().parse(request)
-        availabilitie=Availabilities.objects.get(availabilitieId=availabilitie_data['availabilitieId'])
+        availabilitie=Availabilities.objects.get(availabilitieId=availabilitie_data['Id'])
         availabilities_serializer=AvailabilitieSerializer(availabilitie,data=availabilitie_data)
         if availabilities_serializer.is_valid():
             availabilities_serializer.save()
@@ -58,7 +58,7 @@ def reservationApi(request, id=0):
         return JsonResponse("Reservation was not created", safe=False)
     elif request.method == 'PUT':
         reservation_data=JSONParser().parse(request)
-        reservation = Reservations.objects.get(reservationId=reservation_data['reservationId'])
+        reservation = Reservations.objects.get(reservationId=reservation_data['Id'])
         reservations_serializer=ReservationSerializer(reservation,data=reservation_data)
         if reservations_serializer.is_valid():
             reservations_serializer.save()
