@@ -1,17 +1,17 @@
 from django.db import models
 
 class Availabilities(models.Model):
-    availabilitieId = models.AutoField(primary_key=True)
-    availabilitieStart = models.CharField(max_length=500)
-    availabilitieEnd = models.CharField(max_length=500)
-    availabilitieCreatedAt = models.DateField()
+    Id = models.AutoField(primary_key=True)
+    Start = models.CharField(max_length=500)
+    End = models.CharField(max_length=500)
+    CreatedAt = models.DateField()
 
 class Reservations(models.Model):
-    resevationId = models.AutoField(primary_key=True)
-    reservationTitle = models.CharField(max_length=500)
-    reservationEmail = models.CharField(max_length=500)
-    reservationStart = models.DateField()
-    reservationEnd = models.DateField()
-    reservationCreatedAt = models.DateField()
+    Id = models.AutoField(primary_key=True)
+    Title = models.CharField(max_length=500)
+    Email = models.CharField(max_length=500)
+    Start = models.DateField()
+    End = models.DateField()
+    CreatedAt = models.DateField()
 
 
