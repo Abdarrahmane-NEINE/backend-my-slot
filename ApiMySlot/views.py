@@ -21,7 +21,7 @@ def availabilitieApi(request, id=0):
     if request.method == 'GET':
         availabilities = Availabilities.objects.all()
         availabilities_serializer = AvailabilitieSerializer(availabilities,many=True)
-        return JsonResponse(availabilities_serializer.data, sage=False)
+        return JsonResponse(availabilities_serializer.data, safe=False)
     elif request.method=='POST':
         availabilitie_data = JSONParser().parse(request)
         availabilities_serializer = AvailabilitieSerializer(data=availabilitie_data)
@@ -48,9 +48,10 @@ def reservationApi(request, id=0):
     if request.method == 'GET':
         reservations = Reservations.objects.all()
         reservations_serializer = ReservationSerializer(reservations,many=True)
-        return JsonResponse(reservations_serializer.data, sage=False)
+        return JsonResponse(reservations_serializer.data, safe=False)
     elif request.method == 'POST':
-        reservation_data = JSONParser().parse(request)
+        # reservation_data = JSONParser().parse(request)
+        reservation_data = request
         reservations_serializer = ReservationSerializer(data=reservation_data)
         if reservations_serializer.is_valid():
             reservations_serializer.save()
