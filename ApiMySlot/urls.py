@@ -21,5 +21,8 @@ urlpatterns = [
     re_path(r'^reservation$',views.reservationApi),
     re_path(r'^reservation/([0-9]+)$',views.reservationApi),
 
+    re_path(r'^test$',views.testApi),
+    re_path(r'^test/([0-9]+)$',views.testApi),
+
     re_path(r'^reservation/savefile',views.SaveFile)
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT )
