@@ -47,14 +47,12 @@ def reservationApi(request, id=0):
         reservations_serializer = ReservationSerializer(reservations,many=True)
         return JsonResponse(reservations_serializer.data, safe=False)
     elif request.method == 'POST':
-        print('request reservation', request)
         reservation_data = JSONParser().parse(request)
         reservations_serializer = ReservationSerializer(data=reservation_data)
 
         if reservations_serializer.is_valid():
             reservations_serializer.save()
             return JsonResponse("Reservation created",safe=False)
-        print('reservations_serializer.errors', reservations_serializer.errors )
         return JsonResponse(reservations_serializer.errors , safe=False)
     elif request.method == 'PUT':
         reservation_data=JSONParser().parse(request)
