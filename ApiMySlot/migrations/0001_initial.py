@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ("Email", models.EmailField(max_length=254)),
                 ("Start", models.DateTimeField(verbose_name="%Y-%m-%d %h:%m")),
                 ("End", models.DateTimeField(verbose_name="%Y-%m-%d %h:%m")),
-                ("CreatedAt", models.DateTimeField(verbose_name="%Y-%m-%d %h:%m")),
+                ("CreatedAt", models.DateTimeField(auto_now_add=True, null=True)),
             ],
         ),
         migrations.CreateModel(

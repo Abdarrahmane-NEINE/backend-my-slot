@@ -17,7 +17,7 @@ class Reservations(models.Model):
     Start.editable= True
     End = models.DateTimeField("%Y-%m-%d %h:%m")
     End.editable= True
-    CreatedAt = models.DateTimeField("%Y-%m-%d %h:%m")
+    CreatedAt = models.DateTimeField(auto_now_add=True, null=True)
 
 class Tests(models.Model):
     Id = models.AutoField(primary_key=True)
