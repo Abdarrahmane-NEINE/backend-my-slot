@@ -28,10 +28,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-7x4cv_6b5pwrg7-4yd4xbg)s6^9rn&s_s7g8pm&5^h90bimeqh"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['backend.abdarrahmane.link', 'abdarrahmane.link']
 
+CSRF_TRUSTED_ORIGINS = ['https://backend.abdarrahmane.link','https://abdarrahmane.link']
 
 # Application definition
 
@@ -88,7 +89,8 @@ WSGI_APPLICATION = "backendMySlot.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        # "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": "/app/db/db_of_slot.sqlite3",
     }
 }
 
@@ -126,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
