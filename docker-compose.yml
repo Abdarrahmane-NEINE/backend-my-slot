@@ -10,3 +10,5 @@ services:
     volumes:
       - .:/app                # Mount the entire project folder
       - ./db:/app/db          # Mount the SQLite database folder
+    env_file:                 # Load environment variables from .env
+      - .env
