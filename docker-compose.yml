@@ -9,6 +9,9 @@ services:
       - "8000:8000"           # Map port 8000
     volumes:
       - .:/app                # Mount the entire project folder
+      - ./staticfiles:/app/staticfiles # Map static files to host
       - ./db:/app/db          # Mount the SQLite database folder
     env_file:                 # Load environment variables from .env
       - .env
+volumes:
+  static_volume: # Define the volume for static files
