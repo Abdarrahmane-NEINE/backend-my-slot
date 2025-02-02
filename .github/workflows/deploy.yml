@@ -32,14 +32,14 @@ jobs:
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.EC2_HOST }}       # Your EC2 public IP or domain
-          username: ${{ secrets.EC2_USER }}     # The SSH username
-          key: ${{ secrets.EC2_SSH_KEY }}       # Your private SSH key stored as a secret
+          host: ${{ secrets.EC2_HOST }}       # EC2 public IP or domain
+          username: ${{ secrets.EC2_USER }}     # SSH username
+          key: ${{ secrets.EC2_SSH_KEY }}       # private SSH key
           script: |
             # Pull the latest image from Docker Hub
             docker pull abdarrahmane/slot_calendar:latest
             
-            # Change directory to where your docker-compose.yml resides
+            # Directory of docker-compose.yml
             cd /var/www/python_project/backend_my_slot
             
             # Bring down the currently running containers
