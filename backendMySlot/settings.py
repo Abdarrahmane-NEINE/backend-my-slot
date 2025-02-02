@@ -25,14 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = "0l03aq=99wd0_$)04_fhs=l&nlmicn_o3y&yhy3hdp-$7+oe5s"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
 
@@ -89,8 +89,7 @@ WSGI_APPLICATION = "backendMySlot.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        # "NAME": BASE_DIR / "db.sqlite3",
-        "NAME": "/app/db/db_of_slot.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
