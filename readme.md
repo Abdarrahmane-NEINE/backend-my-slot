@@ -209,4 +209,15 @@ pip install pytest-cov
 ```bash
 pytest --cov=api_my_slot
 ```
+##### To see no tested code
+```
+pytest --cov=api_my_slot --cov-report=term-missing
+```
+#### **Code Coverage Report**
+
+**Currently tests coverage is 100%**
+
+[View Coverage Report](https://github.com/Abdarrahmane-NEINE/backend_my_slot/blob/main/backend_my_slot/htmlcov/index.html)
+
+
 
