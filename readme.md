@@ -1,4 +1,4 @@
-# BackendMySlot
+# backend_my_slot
 
 A Django-based backend for managing slots, reservations, and availability.
 
@@ -193,7 +193,7 @@ pytest
 
 ### 2. Run Specific Tests:
 ```bash
-pytest ApiMySlot/tests/test_models.py
+pytest api_my_slot/tests/test_models.py
 ```
 
 ### 3. Generate Test Coverage:
@@ -204,6 +204,6 @@ pip install pytest-cov
 
 #### Run with coverage:
 ```bash
-pytest --cov=ApiMySlot
+pytest --cov=api_my_slot
 ```
 
