@@ -2,6 +2,9 @@
 
 A Django-based backend for managing slots, reservations, and availability.
 
+This backend is for a Meeting Scheduler App
+This web application allows users to publish their availability and let others book meetings with them seamlessly. It provides an intuitive interface for managing availabilities and reservations while ensuring secure email verification for reservation deletions.
+
 The fronted code for this project is available in a separate repository. You can find it here:
 
 [Frontend Repository](https://github.com/Abdarrahmane-NEINE/my_slot.git): https://github.com/Abdarrahmane-NEINE/my_slot.git
@@ -65,7 +68,7 @@ Access the app at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ---
 
-# 🐳 Docker Setup
+# Docker Setup
 
 This project includes a Docker configuration to simplify development and deployment.
 
@@ -124,7 +127,7 @@ volumes:
 
 ---
 
-## 🚀 CI/CD with GitHub Actions
+## CI/CD with GitHub Actions
 
 A GitHub Actions workflow is set up to build and deploy the application to an EC2 instance using Docker Hub.
 
