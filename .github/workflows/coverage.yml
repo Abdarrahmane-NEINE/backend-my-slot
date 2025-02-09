@@ -12,6 +12,9 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}  # Set DJANGO_SECRET_KEY from GitHub Secrets
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest pytest-cov
+          pip install pytest pytest-cov python-dotenv  # Ensure dotenv is installed
 
       - name: Run Tests & Generate Coverage
         run: pytest --cov=api_my_slot --cov-report=html --cov-report=term-missing
