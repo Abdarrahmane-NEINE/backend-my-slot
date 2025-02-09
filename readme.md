@@ -216,8 +216,13 @@ pytest --cov=api_my_slot --cov-report=term-missing
 #### **Code Coverage Report**
 
 **Currently tests coverage is 100%**
+**To generate html report**
+```
+pytest --cov=api_my_slot --cov-report=html:docs/htmlcov
+```
 
-[View Coverage Report](https://github.com/Abdarrahmane-NEINE/backend_my_slot/blob/main/backend_my_slot/htmlcov/index.html)
+## 📊 Code Coverage Report
+- [View Coverage Report (GitHub Pages)](https://backend.slot.coverage.abdarrahmane.link/)
 
 
 
