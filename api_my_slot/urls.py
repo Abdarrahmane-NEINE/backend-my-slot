@@ -1,20 +1,13 @@
-from django.urls import re_path
-
-from api_my_slot import views
-
-from django.conf.urls.static import static
-from django.conf import settings
+from django.urls import path
+from api_my_slot.views import AvailabilityAPI, ReservationAPI, TestAPI
 
 urlpatterns = [
-    # import views  APIs
-    re_path(r'^availabilitie$',views.availabilitie_api),
-    re_path(r'^availabilitie/([0-9]+)$',views.availabilitie_api),
+    path("availabilities", AvailabilityAPI.as_view(), name="availabilities"),
+    path("availabilities/<int:id>", AvailabilityAPI.as_view(), name="availabilities_detail"),
 
-    re_path(r'^reservation$',views.reservation_api),
-    re_path(r'^reservation/([0-9]+)$',views.reservation_api),
+    path("reservations", ReservationAPI.as_view(), name="reservations"),
+    path("reservations/<int:id>", ReservationAPI.as_view(), name="reservations_detail"),
 
-    re_path(r'^test$',views.handl_test_api),
-    re_path(r'^test/([0-9]+)$',views.handl_test_api),
-
-    re_path(r'^reservation/savefile',views.SaveFile)
-]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT )
+    path("tests", TestAPI.as_view(), name="tests"),
+    path("tests/<int:id>", TestAPI.as_view(), name="tests_detail"),
+]

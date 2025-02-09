@@ -1,101 +1,108 @@
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from django.http.response import JsonResponse
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from api_my_slot.models import Availabilities, Reservations, TestModel
-from api_my_slot.serializers import AvailabilitieSerializer, ReservationSerializer,TestSerializer
-
-
+from api_my_slot.serializers import AvailabilitieSerializer, ReservationSerializer, TestSerializer
 from django.core.files.storage import default_storage
 
-# Create your views here.
-from django.http import HttpResponse
-
-
-@csrf_exempt
-def availabilitie_api(request, id=0):
-    if request.method == 'GET':
+# Availability API
+class AvailabilityAPI(APIView):
+    def get(self, request):
         availabilities = Availabilities.objects.all()
-        availabilities_serializer = AvailabilitieSerializer(availabilities,many=True)
-        return JsonResponse(availabilities_serializer.data, safe=False)
-    elif request.method=='POST':
-        availabilitie_data = JSONParser().parse(request)
-        availabilities_serializer=AvailabilitieSerializer(data=availabilitie_data)
-        if availabilities_serializer.is_valid():
-            availabilities_serializer.save()
-            return JsonResponse("Availabilitie created",safe=False)
-        return JsonResponse("Availabilitie was not created", safe=False)
-    elif request.method == 'PUT':
-        availabilitie_data=JSONParser().parse(request)
-        availabilitie=Availabilities.objects.get(id=availabilitie_data['id'])
-        availabilities_serializer=AvailabilitieSerializer(availabilitie,data=availabilitie_data)
-        if availabilities_serializer.is_valid():
-            availabilities_serializer.save()
-            return JsonResponse("Updated successfully", safe=False)
-        return JsonResponse("Failed to update")
-    elif request.method=='DELETE':
-        availabilitie=Availabilities.objects.get(id=id)
-        availabilitie.delete()
-        return JsonResponse("Deleted successfully", safe=False)
+        serializer = AvailabilitieSerializer(availabilities, many=True)
+        return Response(serializer.data)
 
-# crud for reservations
-@csrf_exempt
-def reservation_api(request, id=0):
-    if request.method == 'GET':
+    def post(self, request):
+        serializer = AvailabilitieSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "availability created"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        try:
+            availability = Availabilities.objects.get(id=request.data["id"])
+        except Availabilities.DoesNotExist:
+            return Response({"error": "availability not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = AvailabilitieSerializer(availability, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "updated successfully"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        try:
+            availability = Availabilities.objects.get(id=id)
+            availability.delete()
+            return Response({"message": "deleted successfully"}, status=status.HTTP_200_OK)
+        except Availabilities.DoesNotExist:
+            return Response({"error": "availability not found"}, status=status.HTTP_404_NOT_FOUND)
+
+# Reservation API
+class ReservationAPI(APIView):
+    def get(self, request):
         reservations = Reservations.objects.all()
-        reservations_serializer = ReservationSerializer(reservations,many=True)
-        return JsonResponse(reservations_serializer.data, safe=False)
-    elif request.method == 'POST':
-        reservation_data = JSONParser().parse(request)
-        reservations_serializer = ReservationSerializer(data=reservation_data)
+        serializer = ReservationSerializer(reservations, many=True)
+        return Response(serializer.data)
 
-        if reservations_serializer.is_valid():
-            reservations_serializer.save()
-            return JsonResponse("Reservation created",safe=False)
-        return JsonResponse(reservations_serializer.errors , safe=False)
-    elif request.method == 'PUT':
-        reservation_data=JSONParser().parse(request)
-        reservation=Reservations.objects.get(reservationid=reservation_data['id'])
-        reservations_serializer=ReservationSerializer(reservation,data=reservation_data)
-        if reservations_serializer.is_valid():
-            reservations_serializer.save()
-            return JsonResponse("Updated successfully", safe=False)
-        return JsonResponse("Failed to update")
-    elif request.method=='DELETE':
-        reservation = Reservations.objects.get(id=id)
-        reservation.delete()
-        return JsonResponse("Deleted successfully", safe=False)
+    def post(self, request):
+        serializer = ReservationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "reservation created"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
-def handl_test_api(request, id=0):
-    if request.method == 'GET':
-        tests = Tests.objects.all()
-        tests_serializer = TestSerializer(tests,many=True)
-        return JsonResponse(tests_serializer.data, safe=False)
-    elif request.method == 'POST':
-        test_data = JSONParser().parse(request)
-        # test_data = request
-        tests_serializer = TestSerializer(data=test_data)
-        if tests_serializer.is_valid():
-            tests_serializer.save()
-            return JsonResponse("test created",safe=False)
-        return JsonResponse("test was not created" , safe=False)
-    elif request.method == 'PUT':
-        test_data=JSONParser().parse(request)
-        test = Tests.objects.get(id=test_data['id'])
-        tests_serializer=TestSerializer(test,data=test_data)
-        if tests_serializer.is_valid():
-            tests_serializer.save()
-            return JsonResponse("Updated successfully", safe=False)
-        return JsonResponse("Failed to update")
-    elif request.method=='DELETE':
-        reservation = Tests.objects.get(id=id)
-        reservation.delete()
-        return JsonResponse("Deleted successfully", safe=False)
+    def put(self, request):
+        try:
+            reservation = Reservations.objects.get(id=request.data["id"])
+        except Reservations.DoesNotExist:
+            return Response({"error": "reservation not found"}, status=status.HTTP_404_NOT_FOUND)
 
-# storage
-def SaveFile(request):
-    file=request.FILES['file']
-    file_name=default_storage.save(file.name,file)
-    return JsonResponse(file_name,safe=False)
+        serializer = ReservationSerializer(reservation, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "updated successfully"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        try:
+            reservation = Reservations.objects.get(id=id)
+            reservation.delete()
+            return Response({"message": "deleted successfully"}, status=status.HTTP_200_OK)
+        except Reservations.DoesNotExist:
+            return Response({"error": "reservation not found"}, status=status.HTTP_404_NOT_FOUND)
+
+# Test API
+class TestAPI(APIView):
+    def get(self, request):
+        tests = TestModel.objects.all()
+        serializer = TestSerializer(tests, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = TestSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "test created"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        try:
+            test = TestModel.objects.get(id=request.data["id"])
+        except TestModel.DoesNotExist:
+            return Response({"error": "test not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = TestSerializer(test, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "updated successfully"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        try:
+            test = TestModel.objects.get(id=id)
+            test.delete()
+            return Response({"message": "deleted successfully"}, status=status.HTTP_200_OK)
+        except TestModel.DoesNotExist:
+            return Response({"error": "test not found"}, status=status.HTTP_404_NOT_FOUND)
