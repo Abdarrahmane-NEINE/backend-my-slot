@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest pytest-cov
+          pip install pytest pytest-cov python-dotenv
 
       - name: Run Tests & Generate Coverage
         run: pytest --cov=api_my_slot --cov-report=html:docs/htmlcov --cov-report=term-missing
