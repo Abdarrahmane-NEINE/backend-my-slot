@@ -27,14 +27,14 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest pytest-cov python-dotenv  # Ensure dotenv is installed
+          pip install pytest pytest-cov
 
       - name: Run Tests & Generate Coverage
-        run: pytest --cov=api_my_slot --cov-report=html --cov-report=term-missing
+        run: pytest --cov=api_my_slot --cov-report=html:docs/htmlcov --cov-report=term-missing
 
       - name: Deploy Coverage to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
-          folder: htmlcov  # Deploy only `htmlcov/`
+          folder: docs/htmlcov  # Deploy the correct docs/htmlcov/
           clean: true  # Delete old files before deploying
