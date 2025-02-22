@@ -28,7 +28,8 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "docker-compose.yml"
-          target: "/var/www/python_project/backend_my_slot/docker-compose.yml"
+          target: "/var/www/python_project/backend_my_slot"
+          overwrite: true
 
       # Build the Docker image and push it to Docker Hub
       - name: Build and Push Docker Image
