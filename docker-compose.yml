@@ -8,7 +8,6 @@ services:
     ports:
       - "8000:8000"           # Map port 8000
     volumes:
-      - ./staticfiles:/app/staticfiles # Map static files to host
       - db_data:/app/db          # create a named volum for db
     env_file:                 # Load environment variables from .env
       - .env
