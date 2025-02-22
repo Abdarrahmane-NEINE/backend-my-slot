@@ -75,6 +75,8 @@ jobs:
 
             # Create staticfiles directory if not exist
             mkdir -p /var/www/python_project/backend_my_slot/staticfiles
+            # add proper permissions
+            sudo chown $USER:$USER /var/www/python_project/backend_my_slot/staticfiles
             
             # Copy staticfiles from the running container to the host directory
             docker cp $(docker-compose ps -q web):/app/staticfiles /var/www/python_project/backend_my_slot/staticfiles
