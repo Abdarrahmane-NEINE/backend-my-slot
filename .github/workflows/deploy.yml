@@ -62,7 +62,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}       # private SSH key
           script: |
             # Log in to Docker Hub non-interactively
-            docker login --username "${DOCKER_USERNAME}" --password-stdin <<< "${DOCKER_PASSWORD}"
+            printf '%s\n' "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
 
             # Pull the latest image from Docker Hub
             docker pull abdarrahmane/slot_calendar:latest
