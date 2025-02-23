@@ -1,10 +1,6 @@
-version: "3.8"
-
 services:
   web:
-    build:
-      context: .              # Use the current folder for Docker context
-      dockerfile: Dockerfile  # Dockerfile is in the same folder
+    image: abdarrahmane/slot_calendar:latest # use pre-built image 
     ports:
       - "8000:8000"           # Map port 8000
     volumes:
