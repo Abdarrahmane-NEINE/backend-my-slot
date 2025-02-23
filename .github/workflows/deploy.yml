@@ -53,14 +53,19 @@ jobs:
       # Deploy the updated image to your EC2 instance via SSH
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v0.1.8
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         with:
           host: ${{ secrets.EC2_HOST }}       # EC2 public IP or domain
           username: ${{ secrets.EC2_USER }}     # SSH username
           key: ${{ secrets.EC2_SSH_KEY }}       # private SSH key
+          envs: DOCKER_USERNAME,DOCKER_PASSWORD
           script: |
-            # Log in to Docker Hub non-interactively
-            echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
-
+            # Create or update Docker config file with login credentials
+            mkdir -p ~/.docker
+            echo "{\"auths\": {\"https://index.docker.io/v1/\": {\"auth\": \"$(echo -n ${DOCKER_USERNAME}:${DOCKER_PASSWORD} | base64)\"}}}" > ~/.docker/config.json
+          
             # Pull the latest image from Docker Hub
             docker pull abdarrahmane/slot_calendar:latest
             
