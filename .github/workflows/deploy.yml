@@ -78,6 +78,9 @@ jobs:
             # Start up containers using the updated image
             docker-compose up -d
 
+            # Run migrations to update the database schema  
+            docker-compose run --rm web python manage.py migrate
+            
             # Create staticfiles directory if not exist
             mkdir -p /var/www/python_project/backend_my_slot/staticfiles
             # add proper permissions
